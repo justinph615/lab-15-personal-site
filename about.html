@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Justin's About Page</title>
+
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+<style type="text/css">
+canvas {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+h5 {
+  
+  color: white;
+  font-family:  sans-serif; /*'Noto Sans TC', makes webpage a bit laggy when using google fonts*/
+  background-color: #333;
+  margin: 5px;
+  padding: -10px;
+  width: 20%;
+    height: 20px;
+    text-align: center;
+    position: relative;
+    left: 0%;
+    letter-spacing: 3px;
+    max-width: 100%;
+  height: auto;
+  
+}
+
+h5 a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  max-width: 100%;
+  height: auto;
+}
+
+h5 a:hover {
+  background-color: #111;
+}
+
+
+body {
+  background-color: #618192;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  max-width: 100%;
+  height: auto;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px 200px;
+  text-decoration: none;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+img {
+  max-width: 70%;
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+}
+
+p.about {
+font-family: 'Noto Sans TC', sans-serif;
+color:lime;
+  width: 40em; 
+  padding:20px;
+  margin:50px;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: auto;
+  top:20px;
+  left:350px;
+  text-align: justify;
+  
+
+}
+</style>
+
+
+
+
+
+</head>
+<body>
+
+
+<canvas id="c">  </canvas>	
+<script>
+		
+			//document.addEventListener('DOMContentLoaded', main);
+
+var w = c.width = window.innerWidth,
+    h = c.height = window.innerHeight,
+    ctx = c.getContext( '2d' ),
+    
+    opts = {
+      
+      len: 20,
+      count: 50,
+      baseTime: 10,
+      addedTime: 10,
+      dieChance: .05,
+      spawnChance: 1,
+      sparkChance: .1,
+      sparkDist: 10,
+      sparkSize: 2,
+      
+      color: 'hsl(hue,1%,light%)',
+      baseLight: 2,
+      addedLight: 2, // [50-10,50+10]
+      shadowToTimePropMult: 6,
+      baseLightInputMultiplier: .01,
+      addedLightInputMultiplier: .02,
+      
+      cx: w / 2,
+      cy: h / 2,
+      repaintAlpha: .04,
+      hueChange: .1
+    },
+    
+    tick = 0,
+    lines = [],
+    dieX = w / 2 / opts.len,
+    dieY = h / 2 / opts.len,
+    
+    baseRad = Math.PI * 2 / 6;
+    
+ctx.fillStyle = 'black';
+ctx.fillRect( 0, 0, w, h );
+
+function loop() {
+  
+  window.requestAnimationFrame( loop );
+  
+  ++tick;
+  
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(0,0,0,alp)'.replace( 'alp', opts.repaintAlpha );
+  ctx.fillRect( 0, 0, w, h );
+  ctx.globalCompositeOperation = 'lighter';
+  
+  if( lines.length < opts.count && Math.random() < opts.spawnChance )
+    lines.push( new Line );
+  
+  lines.map( function( line ){ line.step(); } );
+}
+function Line(){
+  
+  this.reset();
+}
+Line.prototype.reset = function(){
+  
+  this.x = 0;
+  this.y = 0;
+  this.addedX = 0;
+  this.addedY = 0;
+  
+  this.rad = 0;
+  
+  this.lightInputMultiplier = opts.baseLightInputMultiplier + opts.addedLightInputMultiplier * Math.random();
+  
+  this.color = opts.color.replace( 'hue', tick * opts.hueChange );
+  this.cumulativeTime = 0;
+  
+  this.beginPhase();
+}
+Line.prototype.beginPhase = function(){
+  
+  this.x += this.addedX;
+  this.y += this.addedY;
+  
+  this.time = 0;
+  this.targetTime = ( opts.baseTime + opts.addedTime * Math.random() ) |0;
+  
+  this.rad += baseRad * ( Math.random() < .5 ? 1 : -1 );
+  this.addedX = Math.cos( this.rad );
+  this.addedY = Math.sin( this.rad );
+  
+  if( Math.random() < opts.dieChance || this.x > dieX || this.x < -dieX || this.y > dieY || this.y < -dieY )
+    this.reset();
+}
+Line.prototype.step = function(){
+  
+  ++this.time;
+  ++this.cumulativeTime;
+  
+  if( this.time >= this.targetTime )
+    this.beginPhase();
+  
+  var prop = this.time / this.targetTime,
+      wave = Math.sin( prop * Math.PI / 2  ),
+      x = this.addedX * wave,
+      y = this.addedY * wave;
+  
+  ctx.shadowBlur = prop * opts.shadowToTimePropMult;
+  ctx.fillStyle = ctx.shadowColor = this.color.replace( 'light', opts.baseLight + opts.addedLight * Math.sin( this.cumulativeTime * this.lightInputMultiplier ) );
+  ctx.fillRect( opts.cx + ( this.x + x ) * opts.len, opts.cy + ( this.y + y ) * opts.len, 2, 2 );
+  
+  if( Math.random() < opts.sparkChance )
+    ctx.fillRect( opts.cx + ( this.x + x ) * opts.len + Math.random() * opts.sparkDist * ( Math.random() < .5 ? 1 : -1 ) - opts.sparkSize / 2, opts.cy + ( this.y + y ) * opts.len + Math.random() * opts.sparkDist * ( Math.random() < .5 ? 1 : -1 ) - opts.sparkSize / 2, opts.sparkSize, opts.sparkSize )
+}
+loop();
+
+window.addEventListener( 'resize', function(){
+  
+  w = c.width = window.innerWidth;
+  h = c.height = window.innerHeight;
+  ctx.fillStyle = 'black';
+  ctx.fillRect( 0, 0, w, h );
+  
+  opts.cx = w / 2;
+  opts.cy = h / 2;
+  
+  dieX = w / 2 / opts.len;
+  dieY = h / 2 / opts.len;
+});
+		
+
+
+
+	</script>	
+
+	<nav class="menu">
+	<ul>
+	<h5><a href="index.html">Home Page</a></h5>
+  	
+    <h5 style="background-color:green;"><a href="about.html">About Me</a></h5>
+    <h5><a href="portfolio.html">Portfolio</a></h5>
+    <h5><a href="contact.html">Contact</a></h5>
+  </ul>
+</nav>
+
+
+<p class="about"  align="center" style = "position: absolute; z-index: 2;">
+
+Hello, my name is Justin Philip although my Google name is Justin Space. Some people think Philip is my first name since I have 2 first names that's why I chose to change my last name to Space on my  Google account. My previous work experience is nothing major. Just did some retail work and worked for Amazon. I have been in college for exactly ten years. I started in Spring of 2011, going from BMCC to NYIT to City College, back to BMCC to finish my accociates, then finally to City Tech where I am close to getting my Bachelor's in Emerging Media Technology. I currently have over 150 credits, but need the required classes to graduate. The work I've been doing in this school has been great. Every semester, I have created something I'm proud of, whether its with arduino, processing, unity or digital fabrication. I'm also a person who stutters, something I've been dealing with since childhood. It ranges from moderate to serve at times and I have to change some words around when talking verbally. I've done speech therapy and have to remind myself to use some techniques when experiencing a block. Hopefully in the future, if I go back to speech therapy, I'll be able to overcome my stutter and achieve my goals of starting a tech business and get Americans back to work post-pandemic. 
+
+ </p>
+	
+</body>
+</html>

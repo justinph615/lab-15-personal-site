@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Justin's Portfolio Page</title>
+
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+<style type="text/css">
+canvas {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+h5 {
+  
+  color: white;
+  font-family: sans-serif; /*'Noto Sans TC', makes webpage a bit laggy when using google fonts*/
+  background-color: #333;
+  margin: 5px;
+  padding: -10px;
+  width: 20%;
+    height: 20px;
+    text-align: center;
+    position: relative;
+    left: 0%;
+    letter-spacing: 3px;
+    max-width: 100%;
+  height: auto;
+  
+}
+
+h5 a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  max-width: 100%;
+  height: auto;
+}
+
+h5 a:hover {
+  background-color: #111;
+}
+
+
+body {
+  background-color: #618192;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  max-width: 100%;
+  height: auto;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px 200px;
+  text-decoration: none;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+
+
+iframe{
+
+  right:100px;
+  top:25px;
+}
+
+
+
+div.gallery img {
+  left:10px;
+  float: left;
+  margin-top:50px
+
+}
+
+div.desc {
+  padding: 10px;
+  text-align: left;
+  left: 0px;
+  bottom: -70px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10px;
+
+  width:300px;
+}
+
+div.gallery2 img {
+  left:10px;
+  float: left;
+  margin-top:300px
+}
+
+div.desc2 {
+  padding: 10px;
+  text-align: left;
+  left: 0px;
+  bottom: -70px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10px;
+
+  width:300px;
+}
+
+div.gallery3 img { 
+  margin-top:295px;
+  margin-left:330px;
+  
+
+}
+
+div.desc3 {
+  padding: 10px;
+  text-align: left;
+  left: 320px;
+  bottom: -60px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10px;
+
+  width:300px;
+}
+
+div.gallery4 img { 
+  margin-top:-70px;
+  margin-left:350px;
+  
+
+}
+
+div.desc4 {
+  padding: 10px;
+  text-align: left;
+  left: 320px;
+  bottom: -70px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10px;
+
+  width:300px;
+}
+</style>
+
+
+
+
+
+</head>
+<body>
+
+
+<canvas id="c">  </canvas>	
+<script>
+		
+			//document.addEventListener('DOMContentLoaded', main);
+
+var w = c.width = window.innerWidth,
+    h = c.height = window.innerHeight,
+    ctx = c.getContext( '2d' ),
+    
+    opts = {
+      
+      len: 20,
+      count: 50,
+      baseTime: 10,
+      addedTime: 10,
+      dieChance: .05,
+      spawnChance: 1,
+      sparkChance: .1,
+      sparkDist: 10,
+      sparkSize: 2,
+      
+      color: 'hsl(hue,1%,light%)',
+      baseLight: 0,
+      addedLight: 2, // [50-10,50+10]
+      shadowToTimePropMult: 6,
+      baseLightInputMultiplier: .01,
+      addedLightInputMultiplier: .02,
+      
+      cx: w / 2,
+      cy: h / 2,
+      repaintAlpha: .04,
+      hueChange: .1
+    },
+    
+    tick = 0,
+    lines = [],
+    dieX = w / 2 / opts.len,
+    dieY = h / 2 / opts.len,
+    
+    baseRad = Math.PI * 2 / 6;
+    
+ctx.fillStyle = 'black';
+ctx.fillRect( 0, 0, w, h );
+
+function loop() {
+  
+  window.requestAnimationFrame( loop );
+  
+  ++tick;
+  
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(0,0,0,alp)'.replace( 'alp', opts.repaintAlpha );
+  ctx.fillRect( 0, 0, w, h );
+  ctx.globalCompositeOperation = 'lighter';
+  
+  if( lines.length < opts.count && Math.random() < opts.spawnChance )
+    lines.push( new Line );
+  
+  lines.map( function( line ){ line.step(); } );
+}
+function Line(){
+  
+  this.reset();
+}
+Line.prototype.reset = function(){
+  
+  this.x = 0;
+  this.y = 0;
+  this.addedX = 0;
+  this.addedY = 0;
+  
+  this.rad = 0;
+  
+  this.lightInputMultiplier = opts.baseLightInputMultiplier + opts.addedLightInputMultiplier * Math.random();
+  
+  this.color = opts.color.replace( 'hue', tick * opts.hueChange );
+  this.cumulativeTime = 0;
+  
+  this.beginPhase();
+}
+Line.prototype.beginPhase = function(){
+  
+  this.x += this.addedX;
+  this.y += this.addedY;
+  
+  this.time = 0;
+  this.targetTime = ( opts.baseTime + opts.addedTime * Math.random() ) |0;
+  
+  this.rad += baseRad * ( Math.random() < .5 ? 1 : -1 );
+  this.addedX = Math.cos( this.rad );
+  this.addedY = Math.sin( this.rad );
+  
+  if( Math.random() < opts.dieChance || this.x > dieX || this.x < -dieX || this.y > dieY || this.y < -dieY )
+    this.reset();
+}
+Line.prototype.step = function(){
+  
+  ++this.time;
+  ++this.cumulativeTime;
+  
+  if( this.time >= this.targetTime )
+    this.beginPhase();
+  
+  var prop = this.time / this.targetTime,
+      wave = Math.sin( prop * Math.PI / 2  ),
+      x = this.addedX * wave,
+      y = this.addedY * wave;
+  
+  ctx.shadowBlur = prop * opts.shadowToTimePropMult;
+  ctx.fillStyle = ctx.shadowColor = this.color.replace( 'light', opts.baseLight + opts.addedLight * Math.sin( this.cumulativeTime * this.lightInputMultiplier ) );
+  ctx.fillRect( opts.cx + ( this.x + x ) * opts.len, opts.cy + ( this.y + y ) * opts.len, 2, 2 );
+  
+  if( Math.random() < opts.sparkChance )
+    ctx.fillRect( opts.cx + ( this.x + x ) * opts.len + Math.random() * opts.sparkDist * ( Math.random() < .5 ? 1 : -1 ) - opts.sparkSize / 2, opts.cy + ( this.y + y ) * opts.len + Math.random() * opts.sparkDist * ( Math.random() < .5 ? 1 : -1 ) - opts.sparkSize / 2, opts.sparkSize, opts.sparkSize )
+}
+loop();
+
+window.addEventListener( 'resize', function(){
+  
+  w = c.width = window.innerWidth;
+  h = c.height = window.innerHeight;
+  ctx.fillStyle = 'black';
+  ctx.fillRect( 0, 0, w, h );
+  
+  opts.cx = w / 2;
+  opts.cy = h / 2;
+  
+  dieX = w / 2 / opts.len;
+  dieY = h / 2 / opts.len;
+});
+		
+
+	</script>	
+
+	<nav class="menu">
+	<ul>
+	<h5><a href="index.html">Home Page</a></h5>
+  	
+    <h5><a href="about.html">About Me</a></h5>
+    <h5 style="background-color:darkred;"><a href="portfolio.html">Portfolio</a></h5>
+    <h5><a href="contact.html">Contact</a></h5>
+  </ul>
+</nav>
+
+
+
+<iframe src="https://openprocessing.org/sketch/866877/embed/" width="600" height="700" style = "position: absolute; z-index: 2; overflow: hidden;" scrolling="no" frameborder="0" attribute="Spongebob rain game 2" by Justin Philiphttp://openprocessing.org/sketch/866877Licensed under Creative Commons Attribution ShareAlikehttps://creativecommons.org/licenses/by-sa/3.0"></iframe>
+
+<div class="gallery2" style = "position: absolute; z-index: 2;">
+  
+    <img src="braglet.png" width="300">
+  <div class="desc2" style = "position: absolute; z-index: 2; color:white">I cut my old design in half for this semesters culmination project</div>
+</div>
+
+<div class="gallery" style = "position: absolute; z-index: 2;">
+  
+    <img src="braglet2.png" width="300">
+  <div class="desc" style = "position: absolute; z-index: 2; color:white">A bag holder bracelet. Created using Tinkercad</div>
+</div>
+
+<div class="gallery3" style = "position: absolute; z-index: 2;">
+  
+    <img src="braglet4.png" width="300">
+  <div class="desc3" style = "position: absolute; z-index: 2; color:white"> My original design with an optional phone holder</div>
+</div>
+
+<div class="gallery4" style = "position: absolute; z-index: 2;">
+  
+    <img src="braglet3.jpg" width="200">
+  <div class="desc4" style = "position: absolute; z-index: 2; color:white"> 3D printed bag holder bracelet with velcro straps</div>
+</div>
+
+	
+</body>
+</html>
