@@ -17,13 +17,18 @@ canvas {
   left: 0;
 }
 
+body{
+      background-color: black;
+
+}
+
 h3{
 
-left: 32%;
+left: 42%;
 top:-15px;
 font-family: 'Source Sans Pro', sans-serif;
 opacity: 0.6;
-word-spacing: 100px; /* spaced the header so that animation has room to move*/
+word-spacing: 20px; /* spaced the header so that animation has room to move*/
 
 }
 
@@ -107,8 +112,10 @@ li a:hover {
 <canvas id="c">  </canvas>	
 <script>
 		
-			//document.addEventListener('DOMContentLoaded', main);
 
+
+//Cool canvas animation created by Matei Copot on Codepen.io
+//https://codepen.io/towc/pen/mJzOWJ 
 var w = c.width = window.innerWidth,
     h = c.height = window.innerHeight,
     ctx = c.getContext( '2d' ),
@@ -261,6 +268,6 @@ function hideText()
   </ul>
 </nav>
 
-	<h3 id = "text1" style="color:white;  position: absolute; z-index: 1;">Welcome to my homepage</h3> 
+	<h3 id = "text1" style="color:white;  position: absolute; z-index: 1;">Welcome to my Website</h3> 
 </body>
 </html>
