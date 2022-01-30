@@ -22,7 +22,7 @@ h5 {
   
   color: white;
   font-family:  sans-serif; /*'Noto Sans TC', makes webpage a bit laggy when using google fonts*/
-  background-color: #333;
+  background-color: black; 
   margin: 5px;
   padding: -10px;
   width: 20%;
@@ -30,9 +30,10 @@ h5 {
     text-align: center;
     position: relative;
     left: 0%;
-    letter-spacing: 3px;
-    max-width: 100%;
+    letter-spacing: 2px;
+    max-width: auto; /*from 100%*/
   height: auto;
+  font-size: 1vw;
   
 }
 
@@ -57,9 +58,10 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
-  max-width: 100%;
+  max-width: auto;
   height: auto;
+  /*size: 4.5vw;*/
+  
 }
 
 li {
@@ -81,29 +83,47 @@ li a:hover {
   background-color: #111;
 }
 
-img {
+/*img {
   max-width: 70%;
    display: block;
   margin-left: auto;
   margin-right: auto;
   height: auto;
 }
+*/
 
 p.about {
 font-family: 'Noto Sans TC', sans-serif;
 color:lime;
-  width: 40em; 
-  padding:20px;
-  margin:50px;
+  width: 35vw; 
+  padding:2px;
+  margin:2px;
   word-wrap: break-word;
   margin-left: auto;
   margin-right: auto;
-  top:-30px;
-  left:310px;
+
+  /*top:40px;  don't really need in sticky position
+  left:310px;*/
+
   text-align: justify;
+  font-size: 1.5vw;
   
 
 }
+
+/* For Iphone 10 and up
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+
+}*/
+
+
+
+/*@media screen and (max-width: 800px) { 
+
+}*/
 </style>
 
 
@@ -263,7 +283,7 @@ window.addEventListener( 'resize', function(){
 </nav>
 
 
-<p class="about"  align="center" style = "position: absolute; z-index: 1;">
+<p class="about"  align="center" style = "position: sticky; z-index: 1;">
 
 Hello, my name is Justin Philip although my Google name is Justin Space. Some people think Philip is my first name since I have 2 first names that's why I chose to change my last name to Space on my  Google account. My previous work experience is nothing major. Just did some retail work and worked for Amazon. I have been in college for exactly ten years. I started in Spring of 2011, going from BMCC to NYIT to City College, back to BMCC to finish my accociates, then finally to City Tech where I am close to getting my Bachelor's in Emerging Media Technology. I currently have over 150 credits, but need the required classes to graduate. The work I've been doing in this school has been great. Every semester, I have created something I'm proud of, whether its with arduino, processing, unity or digital fabrication. I'm also a person who stutters, something I've been dealing with since childhood. It ranges from moderate to serve at times and I have to change some words around when talking verbally. I've done speech therapy and have to remind myself to use some techniques when experiencing a block. Hopefully in the future, if I go back to speech therapy, I'll be able to overcome my stutter and achieve my goals of starting a tech business and getting Americans back to work post-pandemic. 
 

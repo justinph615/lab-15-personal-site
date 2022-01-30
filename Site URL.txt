@@ -1,3 +1,144 @@
 https://justinph615.github.io/lab-15-personal-site/index.html
 
 https://github.com/justinph615/lab-15-personal-site
+
+
+
+
+
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git branch
+* gh-pages
+  master
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git branch
+* gh-pages
+  master
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git checkout <master>
+At line:1 char:14
++              ~
+The '<' operator is reserved for future use.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : RedirectionNotSupported
+
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+On branch gh-pages
+nothing to commit, working tree clean
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git checkout -b site
+Switched to a new branch 'site'
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+On branch site
+nothing to commit, working tree clean
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+On branch site
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   about.html
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git add .
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   about.html
+
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 470 bytes | 470.00 KiB/s, done.
+Total 5 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+remote:
+remote: Create a pull request for 'site' on GitHub by visiting:
+remote:      https://github.com/justinph615/lab-15-personal-site/pull/new/site
+remote:
+To https://github.com/justinph615/lab-15-personal-site.git
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git branch
+  gh-pages
+* site
+M       about.html
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git branch
+  master
+* site
+error: Your local changes to the following files would be overwritten by checkout:
+        about.html
+Please commit your changes or stash them before you switch branches.
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git commit -m "updated site branch"
+[site f2982c4] updated site branch
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git push origin site
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/justinph615/lab-15-personal-site.git
+   68d91a1..f2982c4  site -> site
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+Switched to branch 'gh-pages'
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+nothing to commit, working tree clean
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git commit -m "updated gh branch"
+On branch gh-pages
+nothing to commit, working tree clean
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git push origin gh-pages
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/justinph615/lab-15-personal-site.git
+   f831cce..68d91a1  gh-pages -> gh-pages
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   about.html
+        modified:   portfolio.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git add .
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   about.html
+        modified:   portfolio.html
+
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git commit -m "updated"
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 365 bytes | 182.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/justinph615/lab-15-personal-site.git
+   68d91a1..43bd700  gh-pages -> gh-pages
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+On branch gh-pages
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   about.html
+        modified:   portfolio.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git add .
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git status
+On branch gh-pages
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   about.html
+        modified:   portfolio.html
+
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git push origin gh-pages
+Everything up-to-date
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git commit -m "updated1"
+[gh-pages d37b87b] updated1
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site> git push origin gh-pages
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 364 bytes | 364.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/justinph615/lab-15-personal-site.git
+   43bd700..d37b87b  gh-pages -> gh-pages
+PS C:\Users\justinph615\Desktop\mtec1003\lab-15-personal-site>
